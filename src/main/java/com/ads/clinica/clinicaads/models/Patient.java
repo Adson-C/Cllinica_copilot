@@ -64,4 +64,27 @@ public class Patient implements Serializable {
     public void setAge(Integer age) {
         this.age = age;
     }
+
+    public List<ClinicalData> getClinicalDataList() {
+        return clinicalDataList;
+    }
+
+    public void setClinicalDataList(List<ClinicalData> clinicalDataList) {
+        this.clinicalDataList = clinicalDataList;
+    }
+
+    // Métodos utilitários
+    public String getFullName() {
+        return firstName + " " + lastName;
+    }
+
+    @Override
+    public String toString() {
+        return "Patient{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", age=" + age +
+                '}';
+    }
 }

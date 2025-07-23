@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import java.sql.Timestamp;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.io.Serializable;
 
@@ -23,6 +24,7 @@ public class ClinicalData implements Serializable {
     @Column(name = "component_value", nullable = false, length = 255)
     private String componentValue;
 
+    @CreationTimestamp
     @Column(name = "measured_date_time")
     private Timestamp measuredDateTime;
 

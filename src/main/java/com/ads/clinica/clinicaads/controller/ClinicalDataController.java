@@ -1,5 +1,6 @@
 package com.ads.clinica.clinicaads.controller;
 
+import com.ads.clinica.clinicaads.dto.ClinicalDataDTO;
 import com.ads.clinica.clinicaads.models.ClinicalData;
 import com.ads.clinica.clinicaads.models.Patient;
 import com.ads.clinica.clinicaads.repository.ClinicalDataRepository;
@@ -191,4 +192,24 @@ public class ClinicalDataController {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    // metodo que recebe ID do paciente, clinical data usando DTO e salva no banco
+    @PostMapping("/clinicals")
+    public ResponseEntity<ClinicalData> saveClinicalData(@RequestBody ClinicalDataDTO clinicalDataDTO) {
+        try {
+            ClinicalData clinicalData = new ClinicalData();
+            clinicalData.setComponentName(clinicalDataDTO.getComponentName());
+            clinicalData.setComponentValue(clinicalDataDTO.getComponentValue());
+
+            Patient patient = patientRepository.findById(clinicalDataDTO.getPatientId())
+                    .orElseThrow(() -> new RuntimeException("Patient not found with id: " + clinicalDataDTO.getPatientId()));
+
+            clinicalData.setPatient(patient);
+            ClinicalData savedClinicalData = clinicalDataRepository.save(clinicalData);
+            return new ResponseEntity<>(savedClinicalData, HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 }

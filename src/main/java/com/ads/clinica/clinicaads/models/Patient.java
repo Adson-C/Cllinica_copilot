@@ -87,4 +87,9 @@ public class Patient implements Serializable {
                 ", age=" + age +
                 '}';
     }
+
+    public void setId(long l) {
+        // TODO Auto-generated method stub
+        this.id = l;
+    }
 }

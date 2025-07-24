@@ -44,14 +44,18 @@ public class PatientController {
     }
 
     // READ - Buscar paciente por ID
-    @GetMapping("/{id}")
-    public ResponseEntity<Patient> getPatientById(@PathVariable("id") Long id) {
-        Optional<Patient> patientData = patientRepository.findById(id);
-        
-        if (patientData.isPresent()) {
-            return new ResponseEntity<>(patientData.get(), HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+   @GetMapping("/{id}")
+    public ResponseEntity<?> getPatientById(@PathVariable("id") Long id) {
+        try {
+            Optional<Patient> patientData = patientRepository.findById(id);
+
+            if (patientData.isPresent()) {
+                return new ResponseEntity<>(patientData.get(), HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>("Paciente não encontrado com o ID: " + id, HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>("Erro ao buscar paciente: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
